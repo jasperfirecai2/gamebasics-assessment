@@ -11,7 +11,7 @@ export default function Match ({match}: IMatchProps) {
   return (
     <tr>
       <td>{homeTeam.name}</td>
-      {score ? <td>{score.home} - {score.away}</td> : <td>X - X</td>}
+      <td className="font-bold">{score ? `${score.home} - ${score.away}` : 'X - X'}</td>
       <td>{awayTeam.name}</td>
     </tr>
   );

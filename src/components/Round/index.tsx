@@ -13,9 +13,11 @@ export default function Round ({index, matches}: IRoundProps) {
       <h2 className="ms-2 mb-4">Round {index+1} </h2>
       <table className="w-full">
         <thead>
-          <th>Home</th>
-          <th>Score</th>
-          <th>Away</th>
+          <tr>
+            <th>Home</th>
+            <th className="text-white">Score</th>
+            <th>Away</th>
+          </tr>
         </thead>
         <tbody>
           {matches.map(match => 
