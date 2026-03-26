@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@layer components {
+  td {
+    text-align: center;
+  }
+}

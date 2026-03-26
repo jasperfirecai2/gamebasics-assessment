@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+:root {
+    @apply bg-blue-700/70
+}
+
+@layer base {
+    .font-outline-1 {
+        -webkit-text-stroke: 1px black;
+    }
+}
