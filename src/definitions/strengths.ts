@@ -4,7 +4,7 @@ import { Advanced, BallWatching, Cautious, Drained } from "./weaknesses";
 export const Aggressive = {
     name: "Aggressive",
     description: "Tries to advance and shoot on goal as often as possible",
-    targets: [BallWatching], // Weakness this strength gains an advantage on
+    targets: [BallWatching], // Weaknesses this strength gains an advantage on
 } as Strength
 
 export const BreakAway = {

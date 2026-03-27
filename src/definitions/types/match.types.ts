@@ -1,8 +1,8 @@
-import type { Score } from "./score.types"
-import type { Team } from "./team.types"
+import type { TeamType } from "./team.types"
 
-export type MatchType = {
-    homeTeam: Team,
-    awayTeam: Team,
-    score?: Score
+type Score = number;
+
+export interface MatchType {
+    home: [TeamType, Score?]
+    away: [TeamType, Score?]
 }

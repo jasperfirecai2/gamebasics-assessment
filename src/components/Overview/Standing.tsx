@@ -11,9 +11,9 @@ export default function Standing ({position, standing}: IStandingProps) {
   //const [persistentPosition, setPersistentPosition] = useState(position); TODO if custom sorting is allowed we can't assume position = index+1. will need a 'reset' mechanism
 
   return (
-    <tr>
-      <td>{position}.</td>
-      <td>{standing.team.name}</td>
+    <tr className="*:py-2 text-lg">
+      <td className="text-xl">{position}.</td>
+      <td className="text-xl">{standing.team.name}</td>
       <td>{standing.played ?? 'X'}</td>
       <td>{standing.win?.length ?? 'X'}</td>
       <td>{standing.draw?.length ?? 'X'}</td>
@@ -21,7 +21,7 @@ export default function Standing ({position, standing}: IStandingProps) {
       <td>{standing.goalsFor ?? 'X'}</td>
       <td>{standing.goalsAgainst ?? 'X'}</td>
       <td>{standing.goalDifference}</td>
-      <td>{standing.points}</td>
+      <td className="font-bold">{standing.points}</td>
     </tr>
   );
 }

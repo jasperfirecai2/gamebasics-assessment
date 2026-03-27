@@ -1,6 +1,6 @@
 import type { MatchType } from "./match.types"
 
-export type RoundType = {
+export interface RoundType {
     id: string
     matches: MatchType[]
 }

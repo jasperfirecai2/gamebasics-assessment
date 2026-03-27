@@ -1,70 +1,94 @@
 import Overview from "./components/Overview";
 import Round from "./components/Round";
-import { TeamA, TeamB, TeamC, TeamD } from "./definitions/teams";
+import { allTeams, TeamA, TeamB, TeamC, TeamD } from "./definitions/teams";
 import type { RoundType } from "./definitions/types/round.types";
 import {v4 as uuidv4} from 'uuid';
-import type { StandingType } from "./definitions/types/standing.types";
+import type { IResult } from "./definitions/types/standing.types";
+import Team from "./components/Team";
 
 export default function Game () {
 
+  // TODO: should come from (mock) data request
   const rounds = [
     {
       matches: [
-        {homeTeam: TeamA, awayTeam: TeamD},
-        {homeTeam: TeamC, awayTeam: TeamB}
+        {home: [TeamA], away: [TeamD]},
+        {home: [TeamC], away: [TeamB]},
       ],
       id: uuidv4()
     },
     {
       matches: [
-        {homeTeam: TeamB, awayTeam: TeamA},
-        {homeTeam: TeamD, awayTeam: TeamC}
+        {home: [TeamB], away: [TeamA]},
+        {home: [TeamD], away: [TeamC]},
       ],
       id: uuidv4()
     },
     {
       matches: [
-        {homeTeam: TeamD, awayTeam: TeamB},
-        {homeTeam: TeamC, awayTeam: TeamA}
+        {home: [TeamD], away: [TeamB]},
+        {home: [TeamC], away: [TeamA]},
       ],
       id: uuidv4()
     }
   ] as RoundType[]
 
-  const standings = [
+  // TODO: should come from (mock) data request
+  const results = [
     {
       team: TeamA,
-      goalDifference: 0,
-      points: 0,
-      win: [TeamB]
+      win: [TeamB],
+      loss: [TeamC],
+      draw: [TeamD],
+      goalsFor: 10,
+      goalsAgainst: 2
     },
     {
       team: TeamB,
-      goalDifference: 0,
-      points: 0
+      win: [TeamD],
+      loss: [TeamA],
+      draw: [TeamC],
+      goalsFor: 2,
+      goalsAgainst: 15
     },
     {
       team: TeamC,
-      goalDifference: 0,
-      points: 0
+      win: [TeamA],
+      loss: [TeamD],
+      draw: [TeamB],
+      goalsFor: 5,
+      goalsAgainst: 1
     },
     {
       team: TeamD,
-      goalDifference: 0,
-      points: 0
+      win: [TeamC],
+      loss: [TeamB],
+      draw: [TeamA],
+      goalsFor: 2,
+      goalsAgainst: 4
     }
-  ] as StandingType[]
+  ] as IResult[]
 
   return (
     <div className='w-full h-full pt-7'>
-      <div id="Rounds" className="flex justify-center space-x-4">
+      <h2 className="text-white font-outline ms-10">Meet the teams</h2>
+      <section id="Teams" className="flex flex-col justify-center items-start ps-10 space-x-4">
+        <ul>
+        {allTeams.map(team => (
+          <Team key={team.name} team={team}/>
+        ))}
+        </ul>
+      </section>
+      <h2 className="text-white font-outline ms-10">Rounds</h2>
+      <section id="Rounds" className="flex justify-center space-x-4">
         {rounds.map((round, index) => (
           <Round key={round.id} index={index} matches={round.matches}/>
         ))}
-      </div>
-      <div id="overview">
-        <Overview standings={standings}/>
-      </div>
+      </section>
+      <h2 className="text-white font-outline ms-10">Overview</h2>
+      <section id="overview">
+        <Overview results={results}/>
+      </section>
     </div>
   );
 }
