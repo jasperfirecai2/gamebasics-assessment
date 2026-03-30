@@ -1,12 +1,12 @@
 //import { useState } from 'react';
 import type { StandingType } from "../../definitions/types/standing.types";
 
-export interface IStandingProps {
+export interface IStandingRowProps {
   standing: StandingType,
   position: number
 }
 
-export default function Standing ({position, standing}: IStandingProps) {
+export default function StandingRow ({position, standing}: IStandingRowProps) {
 
   //const [persistentPosition, setPersistentPosition] = useState(position); TODO if custom sorting is allowed we can't assume position = index+1. will need a 'reset' mechanism
 

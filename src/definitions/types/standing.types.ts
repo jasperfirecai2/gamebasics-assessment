@@ -1,9 +1,10 @@
+import type { Team } from "../team"
 import type { TeamType } from "./team.types"
 
 
 // Results from simulation
 export interface IResult {
-  team: TeamType, // Assumed unique
+  team: Team, // Assumed unique
   win?: TeamType[], // Which teams did this team win against?
   draw?: TeamType[], // Which teams did this team draw against?
   loss?: TeamType[], // Which teams did this team lose against?

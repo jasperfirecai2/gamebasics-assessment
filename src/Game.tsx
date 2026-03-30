@@ -1,10 +1,10 @@
 import Overview from "./components/Overview";
-import Round from "./components/Round";
+import RoundCard from "./components/Round";
 import { allTeams, TeamA, TeamB, TeamC, TeamD } from "./definitions/teams";
 import type { RoundType } from "./definitions/types/round.types";
 import {v4 as uuidv4} from 'uuid';
 import type { IResult } from "./definitions/types/standing.types";
-import Team from "./components/Team";
+import TeamDetails from "./components/TeamDetails";
 
 export default function Game () {
 
@@ -75,14 +75,14 @@ export default function Game () {
       <section id="Teams" className="flex flex-col justify-center items-start ps-10 space-x-4">
         <ul>
         {allTeams.map(team => (
-          <Team key={team.name} team={team}/>
+          <TeamDetails key={team.name} team={team}/>
         ))}
         </ul>
       </section>
       <h2 className="text-white font-outline ms-10">Rounds</h2>
       <section id="Rounds" className="flex justify-center space-x-4">
         {rounds.map((round, index) => (
-          <Round key={round.id} index={index} matches={round.matches}/>
+          <RoundCard key={round.id} index={index} matches={round.matches}/>
         ))}
       </section>
       <h2 className="text-white font-outline ms-10">Overview</h2>

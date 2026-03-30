@@ -1,7 +1,7 @@
-import type { IResult, StandingType } from '../../definitions/types/standing.types';
-import Standing from './Standing';
-import { calculatePoints } from '../../definitions/points';
+import type { IResult } from '../../definitions/types/standing.types';
+import StandingRow from './StandingRow';
 import { defaultSortRule } from './sortStandings';
+import { Standing } from '../../definitions/standing';
 
 export interface IOverviewProps {
   results: IResult[]
@@ -10,10 +10,7 @@ export interface IOverviewProps {
 export default function Overview ({results}: IOverviewProps) {
 
   const calculatedStandings = results.map(result => {
-    const newStanding = {...result} as StandingType;
-    newStanding.goalDifference = (result.goalsFor ?? 0) - (result.goalsAgainst ?? 0);
-    newStanding.played = (result.win?.length ?? 0) + (result.draw?.length ?? 0) + (result.loss?.length ?? 0);
-    newStanding.points = calculatePoints(newStanding);
+    const newStanding = new Standing({...result, type: 'long'}); // TODO these shouldn't be NEW
     return newStanding
   })
   .toSorted(defaultSortRule) // Sort with our custom sort rules
@@ -37,7 +34,7 @@ export default function Overview ({results}: IOverviewProps) {
       </thead>
       <tbody className='*:border-b *:border-theme'>
         {calculatedStandings.map((standing, index) => 
-          <Standing standing={standing} position={index+1} key={standing.team.name}/>
+          <StandingRow standing={standing} position={index+1} key={standing.team.name}/>
         )}
       </tbody>
     </table>
