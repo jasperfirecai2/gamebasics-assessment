@@ -5,7 +5,7 @@ h1 {
 }
 
 h2 {
-    @apply text-4xl font-extrabold;
+    @apply text-4xl font-extrabold ms-6 mb-2;
 }
 
 h3 {

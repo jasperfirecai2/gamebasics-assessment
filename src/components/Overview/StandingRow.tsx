@@ -11,7 +11,7 @@ export default function StandingRow ({position, standing}: IStandingRowProps) {
   //const [persistentPosition, setPersistentPosition] = useState(position); TODO if custom sorting is allowed we can't assume position = index+1. will need a 'reset' mechanism
 
   return (
-    <tr className="*:py-2 text-lg">
+    <tr className={`*:py-2 text-lg ${(position > 2 && standing.played) ? "text-red-700" : "text-black"}`}>
       <td className="text-xl">{position}.</td>
       <td className="text-xl">{standing.team.name}</td>
       <td>{standing.played ?? 'X'}</td>

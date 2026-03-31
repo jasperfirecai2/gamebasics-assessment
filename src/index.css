@@ -16,5 +16,6 @@
 @theme {
   --color-theme-border: color-mix(in oklab, var(--color-blue-900), 50%, transparant);
   --color-theme: var(--color-blue-500);
-  --color-theme-light: var(--color-blue-300)
+  --color-theme-light: var(--color-blue-300);
+  --color-theme-button: var(--color-blue-400);
 }

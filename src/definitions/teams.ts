@@ -4,7 +4,7 @@ import { Advanced, BallWatching, Cautious, Drained } from "./weaknesses";
 
 export const TeamA = new Team({
     name: "Agitated team", // Assumed unique
-    description: "This team only knows how to attack. They'll keep going for shots on goal. to their credit, they're quite accurate",
+    description: "This team only knows how to attack. They'll keep going for shots on goal",
     strengths: [Aggressive], // What is this team good at (beating)
     weaknesses: [Advanced], // What can an enemy team target with their strength?
     shoot: 75,
@@ -15,7 +15,7 @@ export const TeamA = new Team({
 
 export const TeamB = new Team({
     name: "Ballsy Team",
-    description: "This team likes to play with risky strategies but doesn't see success in that often.",
+    description: "This team likes to play with risky strategies",
     strengths: [BreakAway],
     weaknesses: [BallWatching],
     shoot: 60,
@@ -26,7 +26,7 @@ export const TeamB = new Team({
 
 export const TeamC = new Team({
     name: "Counter Team",
-    description: "Having trained on effective countering strategies this team feels confident against offensive teams. But they havent quite thought of how to take initiative.",
+    description: "Having trained on effective countering strategies this team feels confident taking back control",
     strengths: [CounterAttack],
     weaknesses: [Cautious],
     shoot: 40,
@@ -37,7 +37,7 @@ export const TeamC = new Team({
 
 export const TeamD = new Team({
     name: "Down-to-earth Team",
-    description: "This well-trained team in a strong defensive formation does good against most teams. But it takes a lot of energy to stop sneaky plays effectively.",
+    description: "This well-trained team in a strong defensive formation stops most goals",
     strengths: [Defensive],
     weaknesses: [Drained],
     shoot: 50,

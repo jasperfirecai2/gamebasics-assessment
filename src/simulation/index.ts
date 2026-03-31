@@ -1,5 +1,4 @@
 import { Match } from "../definitions/match";
-import type { Standing } from "../definitions/standing";
 import { Simulation } from "./simulation";
 
 // kickoff: 50/50 who gets control
@@ -27,11 +26,11 @@ import { Simulation } from "./simulation";
 // success: gain defense phase, apply control phase, advance 1 minute, continue loop
 
 
-// after loop:
+// after simulation:
 // determine outcome of match and save to teams' win/loss/draw arrays
 // add goal counts to correct teams' goalsFor & goalsAgainst properties
 
-export function simulate(homeStanding: Standing, awayStanding: Standing, match: Match) {
+export function simulate(match: Match) {
 
     const gameEnd = 90; // minutes when game ends
 
@@ -51,30 +50,5 @@ export function simulate(homeStanding: Standing, awayStanding: Standing, match: 
     // endMatch also updates goals for match
     const matchOutcome = simulation.endMatch();
 
-    // apply goals
-    homeStanding.goalsFor += match.home[1];
-    homeStanding.goalsAgainst += match.away[1];
-
-    awayStanding.goalsFor += match.away[1];
-    awayStanding.goalsAgainst += match.home[1];
-
-    // handle draw/win/loss
-    switch (matchOutcome) {
-      case "draw":
-        homeStanding.draw.push(match.away[0]);
-        awayStanding.draw.push(match.home[0]);
-        break;
-      case "home":
-        homeStanding.win.push(match.away[0]);
-        awayStanding.loss.push(match.home[0]);
-        break;
-      case "away":
-        awayStanding.win.push(match.home[0]);
-        homeStanding.loss.push(match.away[0]);
-    }
-
     return matchOutcome;
 }
-
-
-

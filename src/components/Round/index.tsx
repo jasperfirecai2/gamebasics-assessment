@@ -12,11 +12,11 @@ export default function Round ({index, matches}: IRoundProps) {
   return (
     <Card>
       <h3 className="ms-2 mb-4">Round {index+1} </h3>
-      <table className="w-full">
+      <table className="w-full table-fixed">
         <thead>
           <tr>
             <th>Home</th>
-            <th className="text-white">Score</th>
+            <th className="text-theme">Score</th>
             <th>Away</th>
           </tr>
         </thead>

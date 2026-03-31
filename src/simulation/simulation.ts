@@ -2,11 +2,12 @@ import type { Match } from "../definitions/match";
 import { BLOCK, CONTROL, DEFENSE, SHOOT } from "../definitions/phases";
 import type { Stat } from "../definitions/types/attribute.types";
 import type { Phase } from "../definitions/types/phase.types";
+import { d100, d2 } from "./random";
 import type { MatchSimulation, phaseLookupType, TeamLocation, TeamTracker } from "./simulation.types";
 
 type phaseOutcome = true | false | 'timeout';
 
-type MatchOutcome = TeamLocation |  "draw";
+export type MatchOutcome = TeamLocation |  "draw";
 
 export class Simulation implements MatchSimulation {
 
@@ -24,32 +25,24 @@ export class Simulation implements MatchSimulation {
     this.match = match
   }
 
-  private d100() {
-    return Math.floor(Math.random() * 100) + 1;
-  }
-
   private rollByStats(actorStat: number, receiverStat: number) {
     // roll a % based effect with a math.random between 2 teams
     // e.g. attack   -  block  (+ base chance) >= 1-100
-    return actorStat - receiverStat + this.baseChance >= this.d100();
+    return actorStat - receiverStat + this.baseChance >= d100();
   }
 
   private rollByStat(actorStat: number) {
     // roll a % based effect with a math.random for a single team
     // e.g. shoot / 2  (+ base chance) >= 1-100
-    return actorStat / 2 + this.baseChance >= this.d100();
-  }
-
-  private d2() {
-    return Math.floor(Math.random() * 2) + 1;
+    return actorStat / 2 + this.baseChance >= d100();
   }
 
   kickoff () {
-    this.match.home[1] = 0;
-    this.match.away[1] = 0;
-    const trackerHome = {team: this.match.home[0], goals: 0, type: "home"} as TeamTracker;
-    const trackerAway = {team: this.match.away[0], goals: 0, type: "away"} as TeamTracker;
-    const coinflip = this.d2();
+    this.match.homeScore = 0;
+    this.match.awayScore = 0;
+    const trackerHome = {team: this.match.homeTeam, goals: 0, type: "home"} as TeamTracker;
+    const trackerAway = {team: this.match.awayTeam, goals: 0, type: "away"} as TeamTracker;
+    const coinflip = d2();
     if (coinflip === 1) {
       this.phaseLookup[CONTROL] = trackerHome
       this.phaseLookup[DEFENSE] = trackerAway
@@ -174,8 +167,8 @@ export class Simulation implements MatchSimulation {
     if (allTrackers.length !== 2) throw new Error("phase lookup state is not correct");
     // Add goals to match data. for a real-time display this should be done for every point scored instead
     allTrackers.forEach(tracker => {
-      if (this.match.home[0] === tracker.team) this.match.home[1] = tracker.goals;
-      if (this.match.away[0] === tracker.team) this.match.away[1] = tracker.goals;
+      if (this.match.homeTeam === tracker.team) this.match.homeScore = tracker.goals;
+      if (this.match.awayTeam === tracker.team) this.match.awayScore = tracker.goals;
     })
     const [winner, loser] = allTrackers; // due to earlier sorting index 0 should be the most goals
 

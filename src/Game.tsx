@@ -1,93 +1,60 @@
 import Overview from "./components/Overview";
 import RoundCard from "./components/Round";
-import { allTeams, TeamA, TeamB, TeamC, TeamD } from "./definitions/teams";
-import type { RoundType } from "./definitions/types/round.types";
-import {v4 as uuidv4} from 'uuid';
-import type { IResult } from "./definitions/types/standing.types";
 import TeamDetails from "./components/TeamDetails";
+import { use, useState } from "react";
+import { prepareGame } from "./simulation/prepareGame";
+import { allTeams } from "./definitions/teams";
+import Button from "./components/Button";
+import { simulate } from "./simulation";
+import { StandingContext } from "./context/StandingContext";
 
 export default function Game () {
 
-  // TODO: should come from (mock) data request
-  const rounds = [
-    {
-      matches: [
-        {home: [TeamA], away: [TeamD]},
-        {home: [TeamC], away: [TeamB]},
-      ],
-      id: uuidv4()
-    },
-    {
-      matches: [
-        {home: [TeamB], away: [TeamA]},
-        {home: [TeamD], away: [TeamC]},
-      ],
-      id: uuidv4()
-    },
-    {
-      matches: [
-        {home: [TeamD], away: [TeamB]},
-        {home: [TeamC], away: [TeamA]},
-      ],
-      id: uuidv4()
-    }
-  ] as RoundType[]
+  const {standings, updateStandingsByMatch, resetStandings} = use(StandingContext)
 
-  // TODO: should come from (mock) data request
-  const results = [
-    {
-      team: TeamA,
-      win: [TeamB],
-      loss: [TeamC],
-      draw: [TeamD],
-      goalsFor: 10,
-      goalsAgainst: 2
-    },
-    {
-      team: TeamB,
-      win: [TeamD],
-      loss: [TeamA],
-      draw: [TeamC],
-      goalsFor: 2,
-      goalsAgainst: 15
-    },
-    {
-      team: TeamC,
-      win: [TeamA],
-      loss: [TeamD],
-      draw: [TeamB],
-      goalsFor: 5,
-      goalsAgainst: 1
-    },
-    {
-      team: TeamD,
-      win: [TeamC],
-      loss: [TeamB],
-      draw: [TeamA],
-      goalsFor: 2,
-      goalsAgainst: 4
-    }
-  ] as IResult[]
+  //TODO: Should be a (mock) data request
+  const [teams, _setTeams] = useState(() => allTeams)
+
+  const [game, setGame] = useState(() => prepareGame(teams))
+
+  const {rounds, matches} = game;
+
+  const resetGame = () => {
+    setGame(() => prepareGame(teams));
+  }
+
+  const simulateAll = () => {
+    matches.forEach(match => {
+      const outcome = simulate(match);
+      updateStandingsByMatch(match, outcome);
+    })
+  }
+
 
   return (
     <div className='w-full h-full pt-7'>
-      <h2 className="text-white font-outline ms-10">Meet the teams</h2>
-      <section id="Teams" className="flex flex-col justify-center items-start ps-10 space-x-4">
-        <ul>
-        {allTeams.map(team => (
-          <TeamDetails key={team.name} team={team}/>
-        ))}
-        </ul>
+      <h2 className="text-white font-outline">Meet the teams</h2>
+      <section id="Teams" className="ps-4">
+        <div className="flex row-auto items-start flex-wrap space-x-4 space-y-2">
+          {allTeams.map(team => (
+            <TeamDetails key={team.name} team={team}/>
+          ))}
+        </div>
       </section>
-      <h2 className="text-white font-outline ms-10">Rounds</h2>
-      <section id="Rounds" className="flex justify-center space-x-4">
-        {rounds.map((round, index) => (
-          <RoundCard key={round.id} index={index} matches={round.matches}/>
-        ))}
+      <h2 className="text-white font-outline">Rounds</h2>
+      <section id="Rounds" className="px-4 space-x-2 space-y-1">
+        <Button onClick={() => resetGame()}>Randomize Rounds & Matches</Button>
+        <Button onClick={() => simulateAll()}>Simulate Matches</Button>
+        <div className="flex justify-center space-x-4">
+          {rounds.map((round, index) => (
+            <RoundCard key={round.id} index={index} matches={round.matches}/>
+          ))}
+        </div>
       </section>
-      <h2 className="text-white font-outline ms-10">Overview</h2>
-      <section id="overview">
-        <Overview results={results}/>
+      <h2 className="text-white font-outline">Overview</h2>
+      <section id="overview" className="p-4 space-y-1">
+        <Overview standings={standings}/>
+        <Button onClick={() => resetStandings()}>Reset Standings</Button>
       </section>
     </div>
   );
