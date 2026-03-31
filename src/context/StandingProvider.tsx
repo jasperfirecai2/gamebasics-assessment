@@ -63,8 +63,8 @@ export const StandingProvider = ({children, teams = allTeams}: IStandingProvider
       const newState = [...current]
       const homeReplace = current.indexOf(homeStanding);
       const awayReplace = current.indexOf(awayStanding);
-      current[homeReplace] = newHome;
-      current[awayReplace] = newAway;
+      newState[homeReplace] = newHome;
+      newState[awayReplace] = newAway;
       return newState;
     })
   }
