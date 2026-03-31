@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, run tests across different versions of node
 # then build the application and upload the artifacts
 
-name: Build vite
+name: Build vite and deploy to pages
 
 on:
   push: 
